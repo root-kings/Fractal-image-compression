@@ -19,10 +19,11 @@ import math
 import PIL
 from PIL import Image
 
+#class For file choose API
 class FChooser(App):
     pass
 
- 
+#Outer box layout
 class SampBoxLayout(BoxLayout):
     
     # For radio buttons
@@ -278,13 +279,6 @@ class CustomPopup(Popup):
         elif choice == 'Colored':
             test_rgb() 
         
-        
-        
-
-
-    
-
-    
  
  
 class SampleApp(App):
