@@ -1,0 +1,131 @@
+# ---------- sample.kv  ----------
+ 
+#: import CheckBox kivy.uix.checkbox
+ 
+<CustLabel@Label>:
+    color: 0, 0, 0, 1
+    
+ 
+<CustomPopup>:
+    id:my_widget
+    size_hint: .8, .8
+    auto_dismiss: True
+    title: "Choose Image"
+    BoxLayout:
+        
+        
+        FileChooserIconView:
+            id: filechooser
+            on_selection: my_widget.selected(filechooser.selection)
+        Button:
+            text:"Compress"
+            on_release:my_widget.detail(filechooser.path, filechooser.selection)
+            
+            size_hint_x:.37
+            size_hint_y:.2
+            padding_left:0
+        
+            
+        
+            
+ 
+SampBoxLayout:
+    
+ 
+<SampBoxLayout>:
+    id:my_box
+    orientation: "vertical"
+    padding: 1
+    spacing: 1
+    
+ 
+    # ---------- Holds CheckBox and RadioBox ----------
+    BoxLayout:
+        orientation: "horizontal"
+        height: 20
+        
+ 
+        BoxLayout:
+            
+            orientation: "horizontal"
+            size_hint_x: .35
+            CustLabel:
+                text: "Image quality"
+                color: 1,1,1,1
+                size_hint_x: .06
+                font_size:20
+                
+            CheckBox:
+                group: "fav_color"
+                value: 256
+                size_hint_x: .04
+                on_active:root.quality = 'low'
+            CustLabel:
+                text: "256 by 256 Pixels"
+                color: 1,1,1,1
+                size_hint_x: .04
+                
+            CheckBox:
+                group: "fav_color"
+                value: 512
+                size_hint_x: .04
+                on_active:
+                    root.quality = 'medium'
+            CustLabel:
+                text: "512 by 512 Pixels"
+                color: 1,1,1,1
+                size_hint_x: .04
+            CheckBox:
+                group: "fav_color"
+                value: 1024
+                size_hint_x: .04
+                on_active:
+                    root.quality = 'high'
+            CustLabel:
+                text: "1024 by 1024 Pixels"
+                color: 1,1,1,1
+                size_hint_x: .05
+ 
+    # ---------- Holds Image color selctor ----------
+    BoxLayout:
+        orientation: "horizontal"
+        height: 50
+        BoxLayout:
+            size_hint_x: .20
+            size_hint_y: .70
+            
+            
+
+ 
+            Spinner:
+                text: "Type of image"
+                values: ["Greyscale", "Colored"]
+                font_size:30
+                id: spinner_id
+                on_text: root.spinner_clicked(spinner_id.text),root.insert_data()
+                
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_x: .20
+            size_hint_y: .70
+ 
+            # When clicked the popup opens
+            Button:
+                text: "Choose image file"
+                on_press: root.open_popup()
+                font_size:30
+                
+                
+ 
+ 
+ 
+        
+    # ---------- Displays Popup & Spinner ----------
+   
+ 
+        
+    
+                
+                
+ 
+        
