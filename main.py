@@ -25,6 +25,7 @@ class FChooser(App):
 
 #Outer box layout
 class SampBoxLayout(BoxLayout):
+
     
     # For radio buttons
     quality = StringProperty("")
@@ -285,9 +286,7 @@ class SampleApp(App):
     def build(self):
         # Set the background color for the window
         Window.clearcolor = (0,0,0,0)
-       
-        label = Label(text="This app compress your images")
-        self.label = label
+           
         self.title = "Image Compression"
         return SampBoxLayout()
  
