@@ -7,6 +7,11 @@ verify_ssl = true
 
 [packages]
 requests = "*"
+pyqt5 = "*"
+matplotlib = "*"
+scipy = "*"
+numpy = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
