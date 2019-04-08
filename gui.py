@@ -77,10 +77,10 @@ class App(QWidget):
         button.move(100,70)
         button.clicked.connect(self.openFileNameDialog)
 
-        '''button1 = QPushButton('Final compress', self)
+        button1 = QPushButton('Final compress', self)
         button1.setToolTip('This is To compress your image finally')
         button1.move(300,70)
-        button1.clicked.connect(self.on_click)'''
+        button1.clicked.connect(self.on_click)
         self.show()
     
 
@@ -137,7 +137,7 @@ class App(QWidget):
         global choice
         choice = self.cb.currentText() 
         print ("Pic type is",choice)        
-
+    def on_click(self):
         '''Main backend of the
             desktop app fractal image compressor
             Contains compression functions and many other
