@@ -4,7 +4,7 @@ import PyQt5
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import *
-from PyQt5 import QtGui,QtWidgets
+from PyQt5 import QtGui,QtWidgets,QtCore
 from PyQt5.QtWidgets import (QWidget, QLabel, 
     QComboBox, QApplication)
 import os
@@ -38,8 +38,10 @@ class App(QWidget):
         self.initUI()
         layout = QHBoxLayout()
         
-        '''Radio buttons or quality selector'''
 
+        
+        '''Radio buttons or quality selector'''
+        
         #Radiobutton 1
         radiobutton = QRadioButton("256 by 256")
         radiobutton.quality = "256 by 256"
@@ -59,29 +61,73 @@ class App(QWidget):
 
         #Drop down
         self.cb = QComboBox()
+        
         self.cb.addItem("Select image")
         self.cb.addItem("GreyScale")
         self.cb.addItem("Colored")
         self.cb.currentIndexChanged.connect(self.selectionchange)
+        self.cb.move(500,450)
             
         layout.addWidget(self.cb)
         self.setLayout(layout)
+
+    
+        
     
     #Main function
     def initUI(self):
         self.setWindowTitle("Fractal image compressor")
         self.setGeometry(self.left, self.top, self.width, self.height)
+
+        lbl1 = QLabel('Fractal Image Compression', self)
+        lbl1.move(10, 10)
+        lbl2= QLabel('Choose quality of image',self)
+        lbl2.move(10,200)
+        lbl3= QLabel('Progress of compression',self)
+        lbl3.move(290,65)
         
         button = QPushButton('Select image', self)
         button.setToolTip('This is an example button')
-        button.move(100,70)
+        button.resize(100,32)
+        button.move(5,60)
         button.clicked.connect(self.openFileNameDialog)
 
-        button1 = QPushButton('Final compress', self)
-        button1.setToolTip('This is To compress your image finally')
-        button1.move(300,70)
-        button1.clicked.connect(self.on_click)
+        qbtn = QPushButton('Quit', self)
+        qbtn.clicked.connect(QApplication.instance().quit)
+        qbtn.resize(100,32)
+        qbtn.move(505,430) 
+
+        
+
+        #progress bar
+        self.pbar = QProgressBar(self)
+        self.pbar.setGeometry(30, 40, 200, 25)
+        self.pbar.move(430,60)
+
+        self.btn = QPushButton('Compress', self)
+        self.btn.resize(100,32)
+        self.btn.move(400,430)
+        self.btn.clicked.connect(self.on_click)
+
+        self.timer = QBasicTimer()
+        self.step = 0
         self.show()
+
+    def timerEvent(self, e):
+      
+        if self.step >= 100:
+            
+            self.timer.stop()
+            self.btn.setText('Finished')
+            return
+            
+        self.step = self.step + 1
+        self.pbar.setValue(self.step)
+        
+
+
+      
+        
     
 
     #For opening file
@@ -89,7 +135,7 @@ class App(QWidget):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         global img_input
-        fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self,"Select Image", "","All Files (*);;Python Files (*.py)", options=options)
         if fileName:
             img_input = fileName
             print(fileName)
@@ -142,6 +188,17 @@ class App(QWidget):
             desktop app fractal image compressor
             Contains compression functions and many other
         '''
+        
+        '''
+        if self.timer.isActive():
+            self.timer.stop()
+            self.btn.setText('Start')
+        else:
+            self.timer.start(100, self)
+            self.btn.setText('Stop')
+        '''
+
+
         def get_greyscale_image(img):
             return np.mean(img[:,:,:2], 2)
 
@@ -316,9 +373,13 @@ class App(QWidget):
 
         #Running the main function
         if choice == 'GreyScale':
+            self.timer.start(100, self)
             test_greyscale()
         elif choice == 'Colored':
+            self.timer.start(100, self)
             test_rgb()
+
+
 
 #Executing function				
 def main():
