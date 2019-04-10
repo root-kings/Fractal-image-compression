@@ -85,6 +85,8 @@ class App(QWidget):
         lbl2.move(10,200)
         lbl3= QLabel('Progress of compression',self)
         lbl3.move(290,65)
+        lbl4 = QLabel('Choose image type', self)
+        lbl4.move(481, 200)
         
         button = QPushButton('Select image', self)
         button.setToolTip('This is an example button')
@@ -123,12 +125,7 @@ class App(QWidget):
             
         self.step = self.step + 1
         self.pbar.setValue(self.step)
-        
 
-
-      
-        
-    
 
     #For opening file
     def openFileNameDialog(self):
